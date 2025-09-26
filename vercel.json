@@ -1,8 +1,11 @@
 {
   "version": 2,
-  "buildCommand": "cd project && npm run build",
-  "outputDirectory": "project/.next",
-  "installCommand": "cd project && npm install",
+  "builds": [
+    {
+      "src": "project/package.json",
+      "use": "@vercel/next"
+    }
+  ],
   "functions": {
     "project/src/pages/api/**/*.js": {
       "maxDuration": 30

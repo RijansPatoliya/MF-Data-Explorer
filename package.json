@@ -1,0 +1,28 @@
+{
+  "name": "mf-data-explorer",
+  "version": "1.0.0",
+  "description": "Mutual Fund Explorer & SIP Calculator",
+  "private": true,
+  "scripts": {
+    "build": "cd project && npm install && npm run build",
+    "start": "cd project && npm run start",
+    "dev": "cd project && npm run dev",
+    "install": "cd project && npm install",
+    "vercel-build": "cd project && npm install && npm run build"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/RijansPatoliya/MF-Data-Explorer.git"
+  },
+  "keywords": [
+    "mutual-funds",
+    "sip-calculator",
+    "nextjs",
+    "vercel"
+  ],
+  "author": "RijansPatoliya",
+  "license": "MIT"
+}

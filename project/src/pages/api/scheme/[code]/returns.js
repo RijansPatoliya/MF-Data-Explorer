@@ -1,17 +1,34 @@
 import { getSchemeDetails, calculateReturns } from '../../../../lib/api';
 
 export default async function handler(req, res) {
+  // Set CORS headers
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+
+  if (req.method === 'OPTIONS') {
+    res.status(200).end();
+    return;
+  }
+
   if (req.method !== 'GET') {
     return res.status(405).json({ message: 'Method not allowed' });
   }
 
   const { code, period, from, to } = req.query;
 
+  if (!code) {
+    return res.status(400).json({ message: 'Scheme code is required' });
+  }
+
   try {
     const details = await getSchemeDetails(code);
     
     if (period) {
       const returns = calculateReturns(details.data, period);
+      if (!returns) {
+        return res.status(400).json({ message: 'Unable to calculate returns for the given period' });
+      }
       res.status(200).json(returns);
     } else if (from && to) {
       // Custom date range logic can be implemented here
@@ -21,6 +38,9 @@ export default async function handler(req, res) {
     }
   } catch (error) {
     console.error('Error calculating returns:', error);
-    res.status(500).json({ message: 'Failed to calculate returns' });
+    res.status(500).json({ 
+      message: 'Failed to calculate returns',
+      error: process.env.NODE_ENV === 'development' ? error.message : undefined
+    });
   }
 }

@@ -7,32 +7,8 @@ const nextConfig = {
   },
   images: { 
     unoptimized: true,
-    domains: ['images.pexels.com'],
-    remotePatterns: [
-      {
-        protocol: 'https',
-        hostname: 'images.pexels.com',
-        port: '',
-        pathname: '/**',
-      },
-    ],
+    domains: ['images.pexels.com']
   },
-  // Vercel-specific optimizations
-  experimental: {
-    serverComponentsExternalPackages: ['node-cache'],
-  },
-  // Ensure proper API route handling
-  api: {
-    bodyParser: {
-      sizeLimit: '1mb',
-    },
-  },
-  // Output configuration for Vercel
-  output: 'standalone',
-  // Disable x-powered-by header
-  poweredByHeader: false,
-  // Compress responses
-  compress: true,
 };
 
 module.exports = nextConfig;

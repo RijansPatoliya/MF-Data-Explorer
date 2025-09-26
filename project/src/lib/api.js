@@ -3,27 +3,14 @@ import cache from './cache';
 
 const BASE_URL = 'https://api.mfapi.in/mf';
 
-// Configure axios for Vercel
-const apiClient = axios.create({
-  timeout: 10000,
-  headers: {
-    'Content-Type': 'application/json',
-  },
-});
-
 export const getAllSchemes = async () => {
   const cacheKey = 'all_schemes';
   let schemes = cache.get(cacheKey);
   
   if (!schemes) {
-    try {
-      const response = await apiClient.get(BASE_URL);
-      schemes = response.data;
-      cache.set(cacheKey, schemes);
-    } catch (error) {
-      console.error('Error fetching schemes:', error);
-      throw new Error('Failed to fetch mutual fund schemes');
-    }
+    const response = await axios.get(BASE_URL);
+    schemes = response.data;
+    cache.set(cacheKey, schemes);
   }
   
   return schemes;
@@ -34,14 +21,9 @@ export const getSchemeDetails = async (code) => {
   let details = cache.get(cacheKey);
   
   if (!details) {
-    try {
-      const response = await apiClient.get(`${BASE_URL}/${code}`);
-      details = response.data;
-      cache.set(cacheKey, details);
-    } catch (error) {
-      console.error('Error fetching scheme details:', error);
-      throw new Error(`Failed to fetch details for scheme ${code}`);
-    }
+    const response = await axios.get(`${BASE_URL}/${code}`);
+    details = response.data;
+    cache.set(cacheKey, details);
   }
   
   return details;

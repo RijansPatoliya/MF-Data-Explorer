@@ -1,0 +1,7 @@
+{
+  "private": true,
+  "scripts": {
+    "vercel-build": "npm --prefix project ci && npm --prefix project run build"
+  }
+}
+
